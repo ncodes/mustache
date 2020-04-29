@@ -743,6 +743,19 @@ func ParseStringPartialsRaw(data string, partials PartialProvider, forceRaw bool
 	return &tmpl, err
 }
 
+// ParseStringPartialsRawWithDelims is like ParseStringPartialsRaw but allows
+// for delimeters to be changed
+func ParseStringPartialsRawWithDelims(data string, partials PartialProvider, start, end string, forceRaw bool) (*Template, error) {
+	tmpl := Template{data, start, end, 0, 1, []interface{}{}, forceRaw, partials}
+	err := tmpl.parse()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &tmpl, err
+}
+
 // ParseFile loads a mustache template string from a file and compiles it. The
 // resulting output can be used to efficiently render the template multiple
 // times with different data sources.
